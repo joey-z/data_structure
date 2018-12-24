@@ -63,10 +63,12 @@ RBTNode *right_rotate(RBTNode *node) {
 RBTNode *insert_maintain(RBTNode *root) {
     //站在祖父节点向下看是否失衡　当前节点下边没有红色子节点，不可能失衡
     if (!has_red_child(root)) return root;
-    //左孩子右孩子都没有红色　不是失衡
+    //左孩子和右孩子都为红色时
     if (root->lchild->color == RED && root->rchild->color == RED) {
         //左子树是红色，左子树还有红色孩子
         if (!has_red_child(root->lchild) && !has_red_child(root->rchild)) return root;
+        /*root->color = RED;
+        * root->lchild->color = root->rchild->color = BLACK*/
     } else if (root->lchild->color == RED && has_red_child(root->lchild)) {
         //右孩子是红色　LR
         if (root->lchild->rchild->color == RED) {
@@ -108,8 +110,6 @@ RBTNode *insert(RBTNode *root, int key) {
     root->color = BLACK;
     return root;
 }
-
-//删除
 
 //找到前驱
 RBTNode *predecessor(RBTNode *root) {
@@ -189,13 +189,14 @@ RBTNode *__erase(RBTNode *root, int key) {
         root->rchild = __erase(root->rchild, key);
     //判断度
     } else {
+        //同时处理了度为０和度为１的情况(有改动)
         if (root->lchild == NIL || root->rchild == NIL) {
             RBTNode *temp = (root->lchild == NIL ? root->rchild : root->lchild);
             temp->color += root->color;
             free(root);
             return temp;
-        //同时处理了度为０和度为１的情况(有改动)
         } else {
+            //度为２
             RBTNode *temp = predecessor(root);
             root->key = temp->key;
             root->lchild = __erase(root->lchild, temp->key);
@@ -225,7 +226,6 @@ void output(RBTNode *root) {
     output(root->rchild);
 }
 
-/*
 int main() {
     srand(time(0));
     int op, val;
@@ -248,5 +248,6 @@ int main() {
         }
         output(root);
     }
+    clear(root);
     return 0;
-}*/
+}
