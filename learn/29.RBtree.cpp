@@ -111,7 +111,7 @@ RBTNode *insert(RBTNode *root, int key) {
     return root;
 }
 
-//找到前驱
+//找到前驱 后继也可以
 RBTNode *predecessor(RBTNode *root) {
     RBTNode *temp = root->lchild;
     while (temp->rchild != NIL) temp = temp->rchild;
@@ -226,6 +226,7 @@ void output(RBTNode *root) {
     output(root->rchild);
 }
 
+/*
 int main() {
     srand(time(0));
     int op, val;
@@ -251,3 +252,4 @@ int main() {
     clear(root);
     return 0;
 }
+*/
