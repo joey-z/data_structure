@@ -23,7 +23,7 @@ RBTNode *NIL;
 __attribute__((constructor))
 void init_NIL() {
     NIL = (RBTNode *)malloc(sizeof(RBTNode));
-    NIL->key = -1;
+    NIL->key = 0;
     NIL->color = BLACK;
     NIL->rchild = NIL->rchild = NIL;
     return ;
